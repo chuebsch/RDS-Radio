@@ -35,7 +35,7 @@ uint8_t menumode = 0;
 int8_t sender = 0;
 uint8_t mFreq[30] = {168, 128, 157, 32, 85, 119, 148, 196, 18, 42, 152, 192, 5, 52, 141, 77, 94, 37, 146, 139, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
 static unsigned long menuTimeOut = 0ul;
-//104.3 100.3 103.2 90.7 96.0 99.4 102.3 107.1 89.3 91.7 102.7 106.7  88.0  92.7  101.6 95.2  96.9 
+//104.3 100.3 103.2 90.7 96.0 99.4 102.3 107.1 89.3 91.7 102.7 106.7  88.0  92.7  101.6 95.2  96.9
 //168,  128,  157,  32,  85,  119, 148,  196,  18,  42,  152,  192,   5,      52, 141,  77,   94,   37,
 //DC1E  D210  D318  D311 D312 D313 D314  D315  D220 D6F1 D3F8 |D3F9  |DA1A |1B12| D41C |D3C3 |D3C2 |D311
 //MAIN  DLF   ANTB  BR 1 BR 2 BR 3 BR 4  BR 5  DLFK MDRT ANTT |LATH  |EURO |GAXY| KULM |MDR  |MDRJ |BR 1
@@ -244,6 +244,7 @@ void DisplayText(char *text) {
   }
   strncpy(text2, text, 64);
   strcat(text2, "{ ");
+  for (int i = strlen(text) + 2; i < 70; i++) text2[i] = '\0';
   lcd.setCursor(0, 2);
   lcd.print("                    ");
   lcd.setCursor(0, 2);
