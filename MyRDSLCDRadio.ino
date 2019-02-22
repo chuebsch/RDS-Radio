@@ -438,9 +438,15 @@ top:
       Serial.print("Menu timout");
       Serial.println(menumode);
       doMenuClick();
+    } else if (nowis - menuTimeOut > 300000ul) { //refresh after 5 minutes
+      menumode = 127;
+      Serial.print("Menu timout");
+      Serial.println(menumode);
+      doMenuClick();
     }
   }
   radio.checkRDS();
+
   if ((nowis - nextLEDtime) > 100ul) {
     digitalWrite(TRAFICP_PIN, rds.tp());
     digitalWrite(TRAFICA_PIN, rds.ta());
