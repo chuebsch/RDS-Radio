@@ -435,13 +435,11 @@ top:
   else if (nowis - menuTimeOut > 20000ul) {
     if (menumode) {
       menumode = 127;
-      Serial.print("Menu timout");
-      Serial.println(menumode);
       doMenuClick();
     } else if (nowis - menuTimeOut > 300000ul) { //refresh after 5 minutes
       menumode = 127;
-      Serial.print("Menu timout");
-      Serial.println(menumode);
+      opi = 0xFFFF;
+      opty = 0x1F;
       doMenuClick();
     }
   }
