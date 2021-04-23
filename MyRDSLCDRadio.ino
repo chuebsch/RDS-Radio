@@ -25,6 +25,7 @@ OneButton okButton  ( 9, true);
 #define MUC " Music"
 
 #define DARKDISPLAY 5
+#define SNDR  37
 bool ticktack = false;
 //int resetPin = 2;//not here
 //int SDIO = A4;
@@ -33,7 +34,15 @@ bool ticktack = false;
 uint8_t nfreqm = 0;
 uint8_t menumode = 0;
 int8_t sender = 0;
-uint8_t mFreq[30] = {168, 128, 157, 32, 85, 119, 148, 196, 18, 42, 152, 192, 5, 52, 141, 77, 94, 37, 146, 139, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};
+
+//uint8_t mFreq[30] = {168, 128, 157, 32, 85, 119, 148, 196, 18, 42, 152, 192, 5, 52, 141, 77, 94, 37, 146, 139, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0};Bayreuth
+//MHz  
+//101.8      97.0      90.4      106.3   93.5      96.2    98.4    100.4     105.2     104.8     104.8     103.6     106.7     89.9      95.9      102.2     100.7     90.6    92.7    95.3      101.6   
+//die neue   SWR4 KA   KLASSIK   Dlf     SWR1 BW   SWR2    SWR3    REGNBOGN  bigFM     Querfunk  LR 104,8  RPR1.     bigFM     SWR1 RP   SWR4 LU   DASDING   ENERGY    hr1     hr3     YOU FM    hr4     
+//96.6      102.3     87.7      95.0      97.3      101.4     105.0   101.3     104.4   102.1     103.2     104.9     107.7     91.3      94.2
+//Dlf Kult  AFNEAGLE  CULTURE   MUSIQUE   INTER     BLEUALSA  FFH     antenne1  INFO    RGNBGN 2  RADIOTON  HIT OHR   DIE NEUE  LIBERTE   ANTENNE   
+uint8_t mFreq[SNDR] = {143, 95, 29, 188, 60, 87, 109, 129, 177, 173, 161, 192, 24, 84, 147, 132, 31, 52, 78, 141, 91, 
+      148, 2, 75, 98, 139, 175, 138, 169, 146, 157, 174, 202, 38, 67, 146, 139}; //Karlsruhe
 static unsigned long menuTimeOut = 0ul;
 //104.3 100.3 103.2 90.7 96.0 99.4 102.3 107.1 89.3 91.7 102.7 106.7  88.0  92.7  101.6 95.2  96.9
 //168,  128,  157,  32,  85,  119, 148,  196,  18,  42,  152,  192,   5,      52, 141,  77,   94,   37,
@@ -136,7 +145,8 @@ void doUpClick() {
     case 0:
       //radio.seekUp(true);//to next sender
       sender++;
-      if (!mFreq[sender])sender = 0;
+
+      if (sender >= SNDR) sender = 0;
       radio.setFrequency((RADIO_FREQ) (8750 + mFreq[sender] * 10));
       EEPROM.put(0, sender);
       break;
@@ -172,7 +182,7 @@ void doDownClick() {
       radio.seekDown(true);//to next sender
 
       sender--;
-      sender = (sender < 0) ? 29 : sender;
+      sender = (sender < 0) ? (SNDR - 1) : sender;
       while (!mFreq[sender]) sender--;
       radio.setFrequency((RADIO_FREQ) (8750 + mFreq[sender] * 10));
       EEPROM.put(0, sender);
@@ -521,4 +531,3 @@ top:
   } // update
 
 }
-
